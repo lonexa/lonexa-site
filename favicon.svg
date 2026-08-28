@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Lonexa">
+  <rect width="32" height="32" rx="5" fill="#0E1215"/>
+  <!-- The increment rule: minor ticks, every fifth one major. Same motif as
+       the section dividers on the site. -->
+  <g fill="#5A6470">
+    <rect x="6"  y="18" width="1.6" height="7"/>
+    <rect x="11" y="18" width="1.6" height="7"/>
+    <rect x="16" y="18" width="1.6" height="7"/>
+    <rect x="21" y="18" width="1.6" height="7"/>
+  </g>
+  <rect x="24.8" y="10" width="2" height="15" fill="#A8762A"/>
+  <rect x="6" y="7" width="14" height="2.4" fill="#E1E6EA"/>
+</svg>
