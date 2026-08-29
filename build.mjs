@@ -22,16 +22,53 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
  * app (`compliance/copy.ts`) and go on the Play listing, so they need to
  * resolve without depending on the host's extension-stripping behaviour.
  */
+/**
+ * Every published document is namespaced under its app.
+ *
+ * `lonexa.ai/steady-increment/privacy/`, not `lonexa.ai/privacy/`. Lonexa will
+ * host more than one app, and each needs its own privacy policy, terms and
+ * deletion page - a second app arriving later would otherwise have nowhere to
+ * put them without moving these, and moving a privacy-policy URL that a store
+ * listing already points at is the kind of change nobody wants to make twice.
+ *
+ * Done before anything was submitted to Play, which is the only free moment.
+ * The Play listing, the app's own `compliance/copy.ts` and the Supabase account
+ * settings all reference these URLs; changing them after submission means a
+ * listing update and a store review.
+ *
+ * **The old top-level paths still resolve** - see `REDIRECTS` below. That is not
+ * politeness: build `9cdf9812` has the old URLs compiled into its bundle and is
+ * on a phone, so `/privacy/` has to keep working until an update replaces it.
+ */
+const APP = 'steady-increment';
+
 const PAGES = [
-  { md: 'content/privacy-policy.md',   dir: 'privacy', slug: 'Privacy Policy' },
-  { md: 'content/terms-of-service.md', dir: 'terms',   slug: 'Terms of Service' },
+  { md: 'content/privacy-policy.md',   dir: `${APP}/privacy`, slug: 'Privacy Policy' },
+  { md: 'content/terms-of-service.md', dir: `${APP}/terms`,   slug: 'Terms of Service' },
   // Google Play requires a publicly reachable account-deletion URL for any app
   // that lets somebody create an account, and it has to work *without*
   // installing the app - a reviewer, or somebody who already uninstalled, has
-  // to be able to reach it. `/delete/` is the constant in
-  // `compliance/copy.ts` (ACCOUNT_DELETION_URL), so the directory name is not
-  // free to change.
-  { md: 'content/account-deletion.md', dir: 'delete',  slug: 'Delete your account' },
+  // to be able to reach it. This path is ACCOUNT_DELETION_URL in the app's
+  // `compliance/copy.ts`, so it is not free to change.
+  { md: 'content/account-deletion.md', dir: `${APP}/delete`,  slug: 'Delete your account' },
+];
+
+/**
+ * Stubs kept at the old top-level paths.
+ *
+ * A build already installed on a phone links to `/privacy/` and `/terms/`, and
+ * a 404 behind a "Privacy policy" row reads as a broken app rather than a moved
+ * page. GitHub Pages serves static files with no server-side redirect, so these
+ * are meta-refresh pages that also carry `rel=canonical` at the new URL, which
+ * is what tells a search engine the move was deliberate.
+ *
+ * Safe to delete once no shipped build points at them - which means after the
+ * Play listing is live on the new URLs and both phones have taken an update.
+ */
+const REDIRECTS = [
+  { from: 'privacy', to: `/${APP}/privacy/` },
+  { from: 'terms',   to: `/${APP}/terms/` },
+  { from: 'delete',  to: `/${APP}/delete/` },
 ];
 
 const esc = (s) =>
@@ -46,8 +83,9 @@ function inline(s) {
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text, href) => {
       // Cross-document links in the markdown point at sibling .md files.
       const to = href
-        .replace(/^\.\/privacy-policy\.md$/, '/privacy/')
-        .replace(/^\.\/terms-of-service\.md$/, '/terms/');
+        .replace(/^\.\/privacy-policy\.md$/, `/${APP}/privacy/`)
+        .replace(/^\.\/terms-of-service\.md$/, `/${APP}/terms/`)
+        .replace(/^\.\/account-deletion\.md$/, `/${APP}/delete/`);
       return `<a href="${to}">${text}</a>`;
     });
 }
@@ -140,8 +178,9 @@ function shell({ title, body, slug, dir }) {
   <header class="masthead">
     <a class="wordmark" href="/">Lonexa<span class="dot">.</span></a>
     <nav>
-      <a href="/privacy/">Privacy</a>
-      <a href="/terms/">Terms</a>
+      <a href="/${APP}/privacy/">Privacy</a>
+      <a href="/${APP}/terms/">Terms</a>
+      <a href="/${APP}/delete/">Delete account</a>
     </nav>
   </header>
 </div>
@@ -188,6 +227,38 @@ for (const page of PAGES) {
   mkdirSync(new URL(`${page.dir}/`, import.meta.url), { recursive: true });
   writeFileSync(new URL(out, import.meta.url), html);
   console.log(`built ${out.padEnd(20)} ${String(html.length).padStart(6)} bytes  "${title}"`);
+}
+
+/**
+ * The redirect stubs, written after the real pages.
+ *
+ * Meta refresh plus a JS replace: the meta tag works with scripting disabled,
+ * and `location.replace` does not add the stub to the browser's back stack, so
+ * Back from the policy goes where the reader came from rather than bouncing
+ * them through the redirect again.
+ *
+ * `rel=canonical` at the destination is what tells a search engine this is a
+ * move rather than duplicate content.
+ */
+for (const redirect of REDIRECTS) {
+  const html = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moved</title>
+<meta http-equiv="refresh" content="0; url=${redirect.to}">
+<link rel="canonical" href="https://lonexa.ai${redirect.to}">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<p>This page has moved to <a href="${redirect.to}">${redirect.to}</a>.</p>
+<script>location.replace(${JSON.stringify(redirect.to)});</script>
+</body>
+</html>
+`;
+  mkdirSync(new URL(`${redirect.from}/`, import.meta.url), { recursive: true });
+  writeFileSync(new URL(`${redirect.from}/index.html`, import.meta.url), html);
+  console.log(`redirect ${`/${redirect.from}/`.padEnd(11)} -> ${redirect.to}`);
 }
 
 if (failed) process.exit(1);
