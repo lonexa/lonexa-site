@@ -184,8 +184,9 @@ Synced data stays on our server until you delete it or close your account.
 cannot leave you with a device wiped and a server copy waiting to come back.
 
 Deleting the app removes all local data including progress photos. If you had an
-account, use the reset above **before** uninstalling, or contact us, to remove
-the server copy too.
+account, delete the account first — Account and sync → **Delete your account** —
+or email us afterwards, so the server copy goes too. Uninstalling on its own
+does not remove anything from our server.
 
 ---
 
@@ -194,13 +195,22 @@ the server copy too.
 Depending on where you live you may have the right to access, correct, export,
 delete, or restrict processing of your personal data, and to object to it.
 
-Two of these you can exercise without contacting anybody:
+Three of these you can exercise without contacting anybody:
 
 - **Export:** Profile → Export. Everything, as CSV.
-- **Delete:** Settings → Data → Reset everything.
+- **Delete your data:** Settings → Data → Reset everything. This clears the
+  synced copy and this device, and **leaves your account itself in place**.
+- **Delete your account:** Account and sync → Delete your account. This removes
+  the account and everything we hold on the server. Full detail, including how
+  to ask if you no longer have the app installed, is at
+  **https://lonexa.ai/delete/**.
 
-For anything else, or to have your account and its server data removed entirely,
-email the address below. We will respond within 30 days.
+Those last two are different actions and the difference matters: a reset is for
+starting over, and deleting your account is for leaving. The training log on
+your own phone survives an account deletion — it is often the only copy — and
+*Reset everything* is what removes that.
+
+For anything else, email the address below. We will respond within 30 days.
 
 If you are in the EEA or UK, the lawful basis for processing is **performance of
 a contract** (providing the app you asked for) and, for the AI features and
