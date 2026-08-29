@@ -22,9 +22,8 @@ a prescription, a dosage instruction, or a clinical interpretation.
 
 **It is not a coach, a trainer, or a physician.** Every weight, rep target, pace,
 volume landmark and rep-max estimate it shows is a computation over numbers you
-entered. Strength standards and volume landmarks are population statistics.
-Reference ranges shown alongside laboratory values are the ranges published by
-laboratories, not a judgement about you.
+entered. Strength standards and volume landmarks are population statistics, not
+a judgement about you.
 
 Talk to a qualified healthcare professional before starting, changing or stopping
 anything to do with your training, diet, supplements or medication.
@@ -42,26 +41,7 @@ sessions and is never an instruction.
 You agree that you use the app at your own risk, that you are physically fit to
 train, and that you will stop if something hurts.
 
-## 3. Protocol and laboratory logging
-
-The app can record substances you take and results from blood work.
-
-These features are a **log**. They are not a planner, a cycle designer, a
-calculator, or a source of advice:
-
-- The app does not compute, suggest, or recommend a dose. It never has and this
-  is a design constraint, not an omission.
-- It does not perform reconstitution or syringe-volume arithmetic.
-- It does not interpret laboratory values, flag them as a diagnosis, or tell you
-  what to do about them.
-- The AI features are structurally prevented from seeing any of it.
-
-**You may use these features only to track substances that are legally prescribed
-to you and/or legally obtained in your jurisdiction.** You are responsible for
-the legality of what you do. We do not supply, source, endorse, or advise on any
-substance.
-
-## 4. Your account and your data
+## 3. Your account and your data
 
 An account is optional. Without one, the app is fully functional and your data
 stays on your device.
@@ -76,32 +56,36 @@ which forms part of these terms.
 ### Partner accounts
 
 If you link accounts with another person, they can see your **plans, workouts and
-sets**. They cannot see your body metrics, protocols, laboratory results,
-progress photos or AI spending. Either of you may unlink at any time. Link only
+sets**. They cannot see your body metrics, progress photos or AI spending. Either of you may unlink at any time. Link only
 with someone you intend to share training data with.
 
-## 5. Purchases
+## 4. Purchases
 
-The app has three tiers:
+The app has two tiers:
 
-- **Free.** Full logging and full history. Limited to one gym and one plan.
-- **Lifetime.** A **one-time purchase** unlocking every non-AI feature,
-  permanently. It does not expire, is not a subscription, and will not become
-  one. A feature that ships in the lifetime tier stays in it.
-- **AI subscription.** A separate, optional, recurring subscription covering the
-  AI features, which have a real per-use cost we pay.
+- **Free.** Logging, your full history, and export of everything you have
+  recorded. Some setup is limited — see the app for what the free tier includes.
+- **Pro.** A recurring subscription, billed monthly or yearly, unlocking the
+  rest of the app including the AI features.
 
-**A lifetime purchaser who never subscribes to AI has a complete app.** That is a
-commitment, and it is why the two are sold separately.
+**Two things are never behind the paywall, on any tier, and this is a
+commitment rather than a current state of affairs:** reading your own training
+log, and exporting all of it. If you stop paying, you keep both.
+
+New installs get a free trial of Pro. When it ends, nothing you have recorded is
+deleted or hidden — the app returns to the free tier and your history stays
+where it is.
 
 Purchases are processed by the Google Play Store, not by us. Billing, renewal,
 cancellation and refunds are handled under Google's terms and refund policy.
-Cancel a subscription in the Play Store; cancelling stops future charges and
-leaves everything except the AI features working.
+Cancel in the Play Store; cancelling stops future charges and leaves the free
+tier working.
 
-Prices may change. A price change never affects a lifetime purchase already made.
+Prices may change. A change to the price of a subscription applies from your
+next renewal, never retroactively, and Google notifies you before it takes
+effect.
 
-## 6. AI features
+## 5. AI features
 
 AI features are optional and are limited by a monthly budget.
 
@@ -113,13 +97,13 @@ medical.
 If AI is unavailable — no signal, switched off, or over budget — the app answers
 from the local engine instead and tells you it is doing so.
 
-## 7. Acceptable use
+## 6. Acceptable use
 
 Do not reverse engineer, resell, or redistribute the app; use it to break the
 law; attempt to access another user's data; or attempt to circumvent the AI
 budget or the purchase system.
 
-## 8. Availability
+## 7. Availability
 
 We do not promise the sync service or the AI service will be available at any
 particular time. **The app itself works offline and does not depend on either**,
@@ -128,7 +112,7 @@ which is the point of the local-first design.
 We may modify or discontinue the online services. If we discontinue sync, we will
 give reasonable notice and a way to export your data.
 
-## 9. Disclaimer of warranties
+## 8. Disclaimer of warranties
 
 To the fullest extent permitted by law, the app is provided **"as is"** and
 without warranties of any kind, express or implied, including merchantability,
@@ -136,7 +120,7 @@ fitness for a particular purpose, and non-infringement. We do not warrant that
 the app will be uninterrupted, error-free, or that its computations suit your
 circumstances.
 
-## 10. Limitation of liability
+## 9. Limitation of liability
 
 To the fullest extent permitted by law, we are not liable for indirect,
 incidental, special, consequential or punitive damages, or for lost profits or
@@ -151,12 +135,12 @@ including liability for death or personal injury caused by negligence, or for
 fraud. Some jurisdictions do not allow certain exclusions, so parts of this
 section may not apply to you.
 
-## 11. Indemnity
+## 10. Indemnity
 
 You agree to indemnify us against claims arising from your misuse of the app or
 your breach of these terms, including any claim relating to substances you logged.
 
-## 12. Termination
+## 11. Termination
 
 You may stop using the app at any time; deleting it removes local data, and
 Settings → Data → Reset everything removes the server copy too.
@@ -164,7 +148,7 @@ Settings → Data → Reset everything removes the server copy too.
 We may suspend or terminate an account that breaches these terms. Sections 2, 3,
 9, 10, 11 and 13 survive termination.
 
-## 13. Governing law
+## 12. Governing law
 
 These terms are governed by the laws of the Commonwealth of Kentucky, United
 States, without regard to its conflict-of-laws rules. Disputes will be brought in
@@ -172,12 +156,12 @@ the state or federal courts located in Kentucky, unless the mandatory consumer
 law of your own country of residence gives you the right to bring them elsewhere
 — in which case that right is unaffected.
 
-## 14. Changes
+## 13. Changes
 
 We may update these terms. Material changes will be surfaced in the app before
 they take effect. Continued use afterwards means you accept the updated terms.
 
-## 15. Contact
+## 14. Contact
 
 **Lonexa LLC**
 support@lonexa.ai
@@ -187,11 +171,15 @@ support@lonexa.ai
 
   Not reviewed by a lawyer. This is a serious, honest draft that states what the
   app actually does and does not do, and it is materially better than shipping
-  nothing - but sections 9 through 13 are the ones where the wording carries real
+  nothing - but sections 8 through 12 are the ones where the wording carries real
   consequence, and the app tells people to put weight on a bar. Get them reviewed
-  before taking money.
+  before taking money. (They were sections 9 through 13 before the protocol and
+  laboratory section was removed on 2026-08-28 and everything after it moved up
+  one.)
 
-  Section 5 is a commitment, not marketing: "a lifetime purchaser who never
-  subscribes to AI has a complete app." It is repeated in the plan and in
-  TASKS.md. Do not let a later pricing decision quietly contradict it.
+  Section 4 carries the commitment: reading your own log and exporting all of it
+  are never paywalled, on any tier. That is repeated in docs/DECISIONS.md and in
+  the launch plan. Do not let a later pricing decision quietly contradict it.
+  The lifetime tier this section used to describe was dropped on 2026-08-28 - a
+  one-time payment cannot fund a recurring AI bill.
 -->
