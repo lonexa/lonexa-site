@@ -18,8 +18,9 @@ touches a server at all.**
 | Everything you log — workouts, sets, cardio, plans, gyms, body metrics | **On your device**, in a database only this app can read |
 | The same data, if you create an account | Also on our server, so a second device can see it |
 | Progress photos | **On your device only. Never uploaded, under any circumstances.** |
-| Protocols, doses, injection sites, lab results | On your device. Synced only if you have an account. **Never sent to the AI provider.** |
 | What the AI features see | Training numbers only — see *Artificial intelligence* below |
+| Crash reports | Sent to Sentry when something breaks. No IP address, no account, nothing you logged |
+| Which screens you open | **Only if you turn it on.** Off by default; a count per screen per day, never what you logged |
 
 **You do not need an account to use this app.** Logging a workout has never
 required one and never will. An account exists for one reason: so the same data
@@ -32,8 +33,7 @@ appears on a second device.
 ### Data you enter
 
 Workouts, sets, weights, reps, cardio sessions, plans, gyms and their equipment,
-bodyweight, body-fat percentage, tape measurements, readiness check-ins,
-protocols and doses, and laboratory results.
+bodyweight, body-fat percentage, tape measurements and readiness check-ins.
 
 All of it is stored locally on your device. The app reads every screen from that
 local copy, which is why it works with no signal.
@@ -48,8 +48,8 @@ back to it.
   Health Connect settings.
 - Data read from Health Connect is stored on your device the same way data you
   typed is, and is used to inform readiness scoring and correlations.
-- **We do not request access to health records** (`READ_HEALTH_DATA_IN_RECORDS`).
-  Laboratory results are entered by hand only.
+- **We do not request access to health records** (`READ_HEALTH_DATA_IN_RECORDS`),
+  and the app has no feature that would use them.
 
 ### Account data
 
@@ -57,11 +57,45 @@ If you create an account, we store your **email address** and an authentication
 token. Passwords are handled by our authentication provider and are never stored
 by us in a form we can read.
 
-### Diagnostics
+### Crash reports
 
-We do not currently collect crash reports, analytics, advertising identifiers or
-device identifiers. If that changes, this policy will be updated before the
-change ships, and the section will say exactly what is collected.
+If the app crashes or hits an error it could not handle, a report is sent to
+**Sentry**, our crash-reporting provider, so we can find and fix it. A report
+contains the error, the stack trace, and the app and device version.
+
+- **No IP address and no user identifier is attached.** We have turned that off
+  (`sendDefaultPii`), so a crash report is not linked to you or your account.
+- **Network breadcrumbs are stripped of their contents**, so a crash that
+  happened during a sync does not carry what was being synced.
+- Your workouts, bodyweight, measurements and photos are never included.
+
+### Usage counts — off unless you turn them on
+
+You can choose to share **which screens you open**, under *Usage* in Settings.
+It is **off by default** and nothing is recorded until you switch it on.
+
+What is recorded is a **count per screen per day** — for example, "coach: 3
+times on 29 August". That is the whole of it. Specifically:
+
+- **Never what you logged.** No exercise names, no weights, no notes, no gym
+  names. The list of screens that can be counted is fixed in the app's source
+  and cannot include anything you typed.
+- **Never *when*.** A count for a day is not a timestamp, so it cannot show what
+  time you train or when you pick up your phone.
+- **No third-party analytics, ever.** There is no analytics SDK in this app. The
+  counts travel over the same sync that carries your training data, to the same
+  place, and are read with a single query.
+
+Settings shows you exactly what has been recorded on your device before any of
+it is uploaded, and **Forget what has been recorded** deletes it.
+
+We use this to answer one question — which features are worth building on — and
+nothing else.
+
+### Advertising
+
+We do not collect advertising identifiers, and there is no advertising in the
+app.
 
 **We have never sold personal data and will not.** We do not share it with
 advertisers or data brokers.
@@ -70,7 +104,8 @@ advertisers or data brokers.
 
 ## What leaves your device
 
-Nothing, unless one of these three things is true.
+Nothing you have logged, unless one of these three things is true. Crash
+reports are separate and are covered above — they carry no logged data.
 
 ### 1. You created an account (sync)
 
@@ -80,8 +115,8 @@ account cannot read another's rows; this is enforced by the database, not by the
 app.
 
 **These sync:** workouts, sets, cardio sessions, plans, gyms, equipment,
-exercise preferences, readiness check-ins, body metrics, protocols, protocol
-logs, laboratory results, settings.
+exercise preferences, readiness check-ins, body metrics, goals, settings — and
+the usage counts described above, but only if you switched them on.
 
 **These never sync, by design:**
 
@@ -94,8 +129,7 @@ logs, laboratory results, settings.
 ### 2. You linked accounts with a partner
 
 Partners share **plans, workouts and sets**. Partners do **not** share body
-metrics, protocols, laboratory results, progress photos or AI spending. Either
-person can unlink at any time.
+metrics, progress photos or AI spending. Either person can unlink at any time.
 
 ### 3. You used an AI feature
 
@@ -114,20 +148,14 @@ the app.
 
 **The context never contains:**
 
-- Compound, substance, peptide or medication names
-- Doses, dose amounts or injection sites
-- Laboratory markers or laboratory values
 - Progress photos
+- Your body measurements or body-fat percentage
 - Your email address or any account identifier beyond what is needed to bill the
   request to your own budget
 
 This is enforced in code at the point every request is built, not by
 instructions in a prompt, and it is covered by automated tests that fail the
 build if a restricted field is ever added to a request.
-
-The one thing derived from protocol data that *can* be sent is a **count** — "a
-dose was logged on four days this week" — used to correlate training load with
-consistency. It carries no information about what was taken.
 
 Anthropic processes these requests on our behalf. We do not use your data to
 train any model, and our agreement with Anthropic does not permit them to either.
