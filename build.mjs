@@ -25,6 +25,13 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 const PAGES = [
   { md: 'content/privacy-policy.md',   dir: 'privacy', slug: 'Privacy Policy' },
   { md: 'content/terms-of-service.md', dir: 'terms',   slug: 'Terms of Service' },
+  // Google Play requires a publicly reachable account-deletion URL for any app
+  // that lets somebody create an account, and it has to work *without*
+  // installing the app - a reviewer, or somebody who already uninstalled, has
+  // to be able to reach it. `/delete/` is the constant in
+  // `compliance/copy.ts` (ACCOUNT_DELETION_URL), so the directory name is not
+  // free to change.
+  { md: 'content/account-deletion.md', dir: 'delete',  slug: 'Delete your account' },
 ];
 
 const esc = (s) =>
