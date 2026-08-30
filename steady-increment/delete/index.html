@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deleting your Steady Increment account · Lonexa LLC</title>
+<title>Deleting your data, or your Steady Increment account · Lonexa LLC</title>
 <meta name="description" content="Delete your account for Steady Increment, published by Lonexa LLC.">
 <link rel="canonical" href="https://lonexa.ai/steady-increment/delete/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,13 +28,50 @@
 <div class="shell doc">
   <div class="doc-inner">
     <a class="backlink" href="/">&larr; Lonexa</a>
-    <h1>Deleting your Steady Increment account</h1>
+    <h1>Deleting your data, or your Steady Increment account</h1>
 
-<p class="updated"><strong>Last updated: 29 August 2026</strong></p>
+<p class="updated"><strong>Last updated: 30 August 2026</strong></p>
 
-<p>You can delete your Steady Increment account at any time, and you do not need to ask us to do it. This page explains what happens, what is kept, and how to ask if you can no longer use the app.</p>
+<p>Steady Increment, by Lonexa LLC. You can delete your data at any time, and you do not need to ask us to do it. There are two separate things you might want, and this page covers both:</p>
+
+<ul>
+<li><strong>Delete some or all of your data and keep your account</strong> — the next section.</li>
+<li><strong>Delete your account and everything with it</strong> — the section after that.</li>
+</ul>
+
+<p>Neither needs our involvement, and neither is a request queue.</p>
 
 <hr>
+
+<h2>Deleting your data without deleting your account</h2>
+
+<p>You do not have to close your account to get rid of what is in it. Two options live in the app, both under <strong>Profile → Settings → Data</strong>, and <strong>both remove the data from our server as well as from your phone</strong>.</p>
+
+<h3>Clear workout history</h3>
+
+<p><strong>Profile → Settings → Data → Clear workout history.</strong></p>
+
+<p>Removes every workout, every set, every cardio session and every readiness check-in — from this device <em>and</em> from our server.</p>
+
+<p><strong>Keeps:</strong> your plans, your gyms and their equipment, your custom exercises, your body measurements, your goals, your settings, your progress photos, and your account.</p>
+
+<h3>Reset everything</h3>
+
+<p><strong>Profile → Settings → Data → Reset everything.</strong></p>
+
+<p>Removes everything the app holds about you except the account itself: workouts, sets, cardio, plans, gyms and their equipment and increments, machine settings, exercise preferences, custom exercises, readiness check-ins, body measurements, goals, app settings, any usage counts you had switched on, your progress photos, and the local record of anything you imported. Again, from this device <strong>and</strong> from our server.</p>
+
+<p><strong>Keeps:</strong> your account and sign-in details, so you can carry on using the app with a clean slate. The exercise library is restored to the one the app ships with.</p>
+
+<h3>Two things worth knowing</h3>
+
+<p><strong>The server is cleared first, and if that fails nothing is deleted.</strong> A reset that only cleared your phone would be worse than none at all: the next sync would pull the server copy straight back and you would watch the data you deleted reappear. So we delete from the server while your phone still holds everything, and if that cannot be done — no signal, for instance — we stop and tell you, having changed nothing.</p>
+
+<p><strong>Neither of these deletes your account.</strong> If that is what you want, see below. And if you would rather keep a copy first, <strong>Profile → Export your data</strong> writes everything you have logged as CSV and JSON before you delete any of it.</p>
+
+<hr>
+
+<h2>Deleting your account</h2>
 
 <h2>The short version</h2>
 
@@ -75,7 +112,6 @@
 <li>Any goals you had set</li>
 <li>Your partner link, if you were using couple mode. Your partner keeps their own training; they simply stop being linked to you</li>
 <li>Any usage counts, if you had switched that option on</li>
-<li>Your social profile, posts, comments, likes and follows, if you had opted in to any of that</li>
 </ul>
 
 <p>This is a real deletion, not a flag. Every one of those records is removed by the database as a direct consequence of the account being removed, so there is no list for us to forget to include. We have an automated check that fails if any table is ever added that would not be caught by it.</p>
