@@ -7,12 +7,11 @@ MicroMajors is published by **Lonexa LLC** (Kentucky, United States).
 This policy describes what the game stores, what leaves your device, and what we
 never collect. It is written to be read rather than to be defensible.
 
-**MicroMajors is not local-first, and it is the one Lonexa app that is not.**
-Games are simulated on our server, not on your phone, because the result of a
-match between two people's teams cannot be decided by either person's device.
-That means an account is required, and it means the record of your team lives on
-our server rather than only in your pocket. The rest of this policy follows from
-that one fact.
+**MicroMajors needs an account, and it needs a connection.** Games are simulated
+on our server, not on your phone, because the result of a match between two
+people's teams cannot be decided by either person's device. That means the record
+of your team lives on our server rather than only in your pocket. The rest of
+this policy follows from that one fact.
 
 ---
 
