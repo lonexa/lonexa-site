@@ -40,18 +40,56 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
  * politeness: build `9cdf9812` has the old URLs compiled into its bundle and is
  * on a phone, so `/privacy/` has to keep working until an update replaces it.
  */
-const APP = 'steady-increment';
-
-const PAGES = [
-  { md: 'content/privacy-policy.md',   dir: `${APP}/privacy`, slug: 'Privacy Policy' },
-  { md: 'content/terms-of-service.md', dir: `${APP}/terms`,   slug: 'Terms of Service' },
-  // Google Play requires a publicly reachable account-deletion URL for any app
-  // that lets somebody create an account, and it has to work *without*
-  // installing the app - a reviewer, or somebody who already uninstalled, has
-  // to be able to reach it. This path is ACCOUNT_DELETION_URL in the app's
-  // `compliance/copy.ts`, so it is not free to change.
-  { md: 'content/account-deletion.md', dir: `${APP}/delete`,  slug: 'Delete your account' },
+/**
+ * Every app Lonexa publishes, and the documents each one needs.
+ *
+ * This used to be `const APP = 'steady-increment'`, which is why a second app
+ * had nowhere to put its legal pages and its Play listing pointed at a URL that
+ * returned 404. Content moved to `content/<slug>/` in the same change.
+ *
+ * **`delete` is not automatic, and must not be.** Google Play requires a
+ * publicly reachable account-deletion URL for any app that lets somebody create
+ * an account, reachable *without* installing it — a reviewer, or somebody who
+ * already uninstalled, has to get there. An app with no account has nothing to
+ * delete on a server and no such page; publishing one anyway would describe a
+ * deletion process that does not exist, which is worse than not having the
+ * page. So it is listed per app, by someone who knows whether that app has
+ * accounts.
+ */
+const APPS = [
+  {
+    slug: 'steady-increment',
+    name: 'Steady Increment',
+    docs: ['privacy', 'terms', 'delete'],
+  },
+  {
+    // Local profile: no account, no sign-in, no server. Nothing to delete
+    // anywhere but the phone, so no /delete/ page.
+    slug: 'booth-log',
+    name: 'Booth Log',
+    docs: ['privacy', 'terms'],
+  },
 ];
+
+/** What each document is called, and where it comes from. */
+const DOCS = {
+  privacy: { md: 'privacy-policy.md', dir: 'privacy', slug: 'Privacy Policy' },
+  terms: { md: 'terms-of-service.md', dir: 'terms', slug: 'Terms of Service' },
+  delete: { md: 'account-deletion.md', dir: 'delete', slug: 'Delete your account' },
+};
+
+const PAGES = APPS.flatMap((app) =>
+  app.docs.map((key) => {
+    const doc = DOCS[key];
+    if (!doc) throw new Error(`${app.slug}: unknown document "${key}"`);
+    return {
+      app,
+      md: `content/${app.slug}/${doc.md}`,
+      dir: `${app.slug}/${doc.dir}`,
+      slug: doc.slug,
+    };
+  }),
+);
 
 /**
  * Stubs kept at the old top-level paths.
@@ -66,16 +104,16 @@ const PAGES = [
  * Play listing is live on the new URLs and both phones have taken an update.
  */
 const REDIRECTS = [
-  { from: 'privacy', to: `/${APP}/privacy/` },
-  { from: 'terms',   to: `/${APP}/terms/` },
-  { from: 'delete',  to: `/${APP}/delete/` },
+  { from: 'privacy', to: '/steady-increment/privacy/' },
+  { from: 'terms',   to: '/steady-increment/terms/' },
+  { from: 'delete',  to: '/steady-increment/delete/' },
 ];
 
 const esc = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /** Inline markup, applied to already-escaped text. */
-function inline(s) {
+function inline(appSlug, s) {
   return s
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
@@ -83,26 +121,26 @@ function inline(s) {
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text, href) => {
       // Cross-document links in the markdown point at sibling .md files.
       const to = href
-        .replace(/^\.\/privacy-policy\.md$/, `/${APP}/privacy/`)
-        .replace(/^\.\/terms-of-service\.md$/, `/${APP}/terms/`)
-        .replace(/^\.\/account-deletion\.md$/, `/${APP}/delete/`);
+        .replace(/^\.\/privacy-policy\.md$/, `/${appSlug}/privacy/`)
+        .replace(/^\.\/terms-of-service\.md$/, `/${appSlug}/terms/`)
+        .replace(/^\.\/account-deletion\.md$/, `/${appSlug}/delete/`);
       return `<a href="${to}">${text}</a>`;
     });
 }
 
-function renderTable(lines) {
+function renderTable(appSlug, lines) {
   const cells = (row) =>
     row.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
   const head = cells(lines[0]);
   const body = lines.slice(2).map(cells);
-  const th = head.map((c) => `<th>${inline(esc(c))}</th>`).join('');
+  const th = head.map((c) => `<th>${inline(appSlug, esc(c))}</th>`).join('');
   const tr = body
-    .map((r) => `<tr>${r.map((c) => `<td>${inline(esc(c))}</td>`).join('')}</tr>`)
+    .map((r) => `<tr>${r.map((c) => `<td>${inline(appSlug, esc(c))}</td>`).join('')}</tr>`)
     .join('\n');
   return `<div class="table-wrap"><table>\n<thead><tr>${th}</tr></thead>\n<tbody>\n${tr}\n</tbody>\n</table></div>`;
 }
 
-function toHtml(md) {
+function toHtml(md, appSlug) {
   // 1. Strip HTML comments. This is the whole reason the build exists.
   const clean = md.replace(/<!--[\s\S]*?-->/g, '');
 
@@ -121,11 +159,11 @@ function toHtml(md) {
       continue; // rendered by the page shell, not inline
     }
     if (/^## /.test(lines[0])) {
-      out.push(`<h2>${inline(esc(lines[0].replace(/^## /, '')))}</h2>`);
+      out.push(`<h2>${inline(appSlug, esc(lines[0].replace(/^## /, '')))}</h2>`);
       continue;
     }
     if (/^### /.test(lines[0])) {
-      out.push(`<h3>${inline(esc(lines[0].replace(/^### /, '')))}</h3>`);
+      out.push(`<h3>${inline(appSlug, esc(lines[0].replace(/^### /, '')))}</h3>`);
       continue;
     }
     if (/^---+$/.test(block.trim())) {
@@ -133,7 +171,7 @@ function toHtml(md) {
       continue;
     }
     if (lines[0].trim().startsWith('|') && lines.length > 2) {
-      out.push(renderTable(lines));
+      out.push(renderTable(appSlug, lines));
       continue;
     }
     if (/^[-*] /.test(lines[0].trim())) {
@@ -144,12 +182,12 @@ function toHtml(md) {
         else if (items.length) items[items.length - 1] += ' ' + line.trim();
       }
       out.push(
-        `<ul>\n${items.map((i) => `<li>${inline(esc(i))}</li>`).join('\n')}\n</ul>`,
+        `<ul>\n${items.map((i) => `<li>${inline(appSlug, esc(i))}</li>`).join('\n')}\n</ul>`,
       );
       continue;
     }
 
-    const text = inline(esc(lines.join(' ').replace(/\s+/g, ' ')));
+    const text = inline(appSlug, esc(lines.join(' ').replace(/\s+/g, ' ')));
     const cls = /^<strong>Last updated/.test(text) ? ' class="updated"' : '';
     out.push(`<p${cls}>${text}</p>`);
   }
@@ -157,14 +195,25 @@ function toHtml(md) {
   return { title, body: out.join('\n\n') };
 }
 
-function shell({ title, body, slug, dir }) {
+function shell({ title, body, slug, dir, app }) {
+  // Only the documents this app actually publishes. A nav link to a
+  // /delete/ page an app does not have is a 404 in the footer of its own
+  // privacy policy, which is exactly where a Play reviewer looks.
+  const nav = app.docs
+    .map((key) => {
+      const label =
+        key === 'privacy' ? 'Privacy' : key === 'terms' ? 'Terms' : 'Delete account';
+      return `      <a href="/${app.slug}/${DOCS[key].dir}/">${label}</a>`;
+    })
+    .join('\n');
+
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)} · Lonexa LLC</title>
-<meta name="description" content="${esc(slug)} for Steady Increment, published by Lonexa LLC.">
+<meta name="description" content="${esc(slug)} for ${esc(app.name)}, published by Lonexa LLC.">
 <link rel="canonical" href="https://lonexa.ai/${dir}/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -178,9 +227,7 @@ function shell({ title, body, slug, dir }) {
   <header class="masthead">
     <a class="wordmark" href="/">Lonexa<span class="dot">.</span></a>
     <nav>
-      <a href="/${APP}/privacy/">Privacy</a>
-      <a href="/${APP}/terms/">Terms</a>
-      <a href="/${APP}/delete/">Delete account</a>
+${nav}
     </nav>
   </header>
 </div>
@@ -211,8 +258,8 @@ let failed = false;
 
 for (const page of PAGES) {
   const md = readFileSync(new URL(page.md, import.meta.url), 'utf8');
-  const { title, body } = toHtml(md);
-  const html = shell({ title, body, slug: page.slug, dir: page.dir });
+  const { title, body } = toHtml(md, page.app.slug);
+  const html = shell({ title, body, slug: page.slug, dir: page.dir, app: page.app });
   const out = `${page.dir}/index.html`;
 
   // 2. Assert nothing private leaked. Cheap, and the failure mode it guards
