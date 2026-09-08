@@ -13,34 +13,52 @@ It exists for two jobs:
 ## Layout
 
 ```
-index.html          Company page. Hand-written; edit directly.
-privacy/index.html  GENERATED — do not edit. Run `node build.mjs`.
-terms/index.html    GENERATED — do not edit. Run `node build.mjs`.
-404.html            Hand-written.
-assets/site.css     All styling for every page.
+index.html               Company page. Hand-written; edit directly.
+<app>/privacy/index.html GENERATED — do not edit. Run `node build.mjs`.
+<app>/terms/index.html   GENERATED — do not edit.
+<app>/delete/index.html  GENERATED — do not edit. Only for apps that have accounts.
+privacy|terms|delete/    GENERATED redirect stubs at the old top-level paths.
+404.html                 Hand-written.
+assets/site.css          All styling for every page.
 favicon.svg
-content/*.md        Source for the two legal pages.
-build.mjs           content/*.md  ->  privacy/ + terms/
-CNAME               Custom domain for GitHub Pages. Do not delete.
-.nojekyll           Serve files as-is; skip Jekyll processing.
+content/<app>/*.md       Source for that app's legal pages.
+build.mjs                content/<app>/*.md  ->  <app>/privacy/ + terms/ + delete/
+CNAME                    Custom domain for GitHub Pages. Do not delete.
+.nojekyll                Serve files as-is; skip Jekyll processing.
 ```
+
+**Every document is namespaced under its app** — `lonexa.ai/micromajors/privacy/`,
+not `lonexa.ai/privacy/` — because Lonexa hosts more than one app and a
+privacy-policy URL a store listing already points at is a thing nobody wants to
+move twice. `APPS` at the top of `build.mjs` is the list, and `delete` is listed
+per app by hand: only an app with accounts has anything to delete on a server,
+and publishing a deletion page for one that does not would describe a process
+that does not exist.
+
+| App | Slug | Documents | Source repository |
+|---|---|---|---|
+| Steady Increment | `steady-increment` | privacy, terms, delete | `../exerciseapp/docs/legal/` |
+| Booth Log | `booth-log` | privacy, terms | `../lonexa-booth-log/docs/legal/` |
+| MicroMajors | `micromajors` | privacy, terms, delete | `../MicroMajors/docs/legal/` |
 
 ## Editing the legal pages
 
-The **source of truth is the app repository**, at `docs/legal/`. Do not edit the
-markdown here in isolation — the two copies will drift and the app will ship a
-policy that disagrees with the published one.
+The **source of truth is the app repository**, at `docs/legal/` — see the table
+above for which repository. Do not edit the markdown here in isolation: the two
+copies will drift and the app will ship a policy that disagrees with the
+published one.
 
 ```bash
-cp ../exerciseapp/docs/legal/privacy-policy.md   content/
-cp ../exerciseapp/docs/legal/terms-of-service.md content/
+cp ../MicroMajors/docs/legal/*.md content/micromajors/
 node build.mjs
 ```
 
 `build.mjs` strips HTML comments before rendering and then asserts that none
-survived. Both source documents end with a `MAINTAINER NOTE - not published`
+survived. Every source document ends with a `MAINTAINER NOTE - not published`
 block, so this is not a theoretical concern — hand-converting these files would
-publish internal notes into page source.
+publish internal notes into page source. Those notes are where the unfinished
+business lives: what is described but not yet built, and which claim has to be
+re-checked before a store listing goes live.
 
 ## Previewing locally
 

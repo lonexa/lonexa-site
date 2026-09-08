@@ -69,6 +69,20 @@ const APPS = [
     name: 'Booth Log',
     docs: ['privacy', 'terms'],
   },
+  {
+    // The one app here that is NOT local-first, and the reason it needs all
+    // three: matches are simulated on a server because a game between two
+    // people's teams cannot be decided by either person's phone. So an account
+    // is required rather than optional, and there is a real server-side record
+    // to delete.
+    //
+    // The slug is one word because the app is - `ai.lonexa.micromajors`, and
+    // the Expo slug `micromajors`. `steady-increment` and `booth-log` are
+    // hyphenated because those names are two words, not because of a rule.
+    slug: 'micromajors',
+    name: 'MicroMajors',
+    docs: ['privacy', 'terms', 'delete'],
+  },
 ];
 
 /** What each document is called, and where it comes from. */
