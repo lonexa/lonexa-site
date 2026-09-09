@@ -222,6 +222,31 @@ section > p { max-width: var(--measure); color: var(--muted); }
 
 .contact h2 { color: #E1E6EA; }
 
+/*
+ * Prose links on the dark ground. `.field-value a` covered the company page's
+ * address block, but a bare paragraph link in this section fell through to the
+ * browser default and rendered as unstyled blue on near-black - which is what
+ * the Steady Increment page's "Get it on Google Play" link did.
+ */
+.contact p a { color: var(--brass); text-decoration: none; border-bottom: 1px solid rgba(197,154,90,0.45); }
+.contact p a:hover { border-bottom-color: var(--brass); }
+
+/* The one link on a page that exists to be clicked. */
+.cta {
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2px;
+  background: var(--brass);
+  color: #14181B !important;
+  border: 0 !important;
+  text-decoration: none;
+}
+.cta:hover { background: #D8AC6B; }
+
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -311,21 +336,29 @@ footer a:hover { color: var(--brass); }
   margin-block: 2.5rem;
 }
 
-.doc table {
+/*
+ * Tables and ordered lists are shared by the generated legal pages (.doc) and
+ * the hand-written product pages, which are laid out with `section` inside
+ * `.shell` rather than `.doc`. They were `.doc`-only until the Steady Increment
+ * product page arrived with two comparison tables and rendered them as bare
+ * browser default - so the selectors carry both roots rather than being
+ * duplicated.
+ */
+.doc table, .shell table {
   width: 100%;
   border-collapse: collapse;
   margin-block: 1.5rem;
   font-size: 0.9375rem;
 }
 
-.doc th, .doc td {
+.doc th, .doc td, .shell th, .shell td {
   text-align: left;
   padding: 0.625rem 0.875rem;
   border-bottom: 1px solid var(--rule);
   vertical-align: top;
 }
 
-.doc th {
+.doc th, .shell th {
   font-family: var(--mono);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -333,6 +366,10 @@ footer a:hover { color: var(--brass); }
   text-transform: uppercase;
   color: var(--faint);
 }
+
+.doc ol, .shell ol { padding-left: 1.25rem; }
+.doc ol li, .shell ol li { margin-block: 0.4rem; }
+.doc ol li::marker, .shell ol li::marker { color: var(--brass); font-family: var(--mono); }
 
 .table-wrap { overflow-x: auto; }
 

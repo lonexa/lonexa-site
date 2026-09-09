@@ -14,6 +14,8 @@ It exists for two jobs:
 
 ```
 index.html               Company page. Hand-written; edit directly.
+<app>/index.html         Product page. HAND-WRITTEN; edit directly.
+<app>/<topic>/index.html Marketing pages. HAND-WRITTEN; edit directly.
 <app>/privacy/index.html GENERATED — do not edit. Run `node build.mjs`.
 <app>/terms/index.html   GENERATED — do not edit.
 <app>/delete/index.html  GENERATED — do not edit. Only for apps that have accounts.
@@ -26,6 +28,23 @@ build.mjs                content/<app>/*.md  ->  <app>/privacy/ + terms/ + delet
 CNAME                    Custom domain for GitHub Pages. Do not delete.
 .nojekyll                Serve files as-is; skip Jekyll processing.
 ```
+
+**Marketing pages are hand-written, and `build.mjs` never touches them.** The
+build only ever writes the three legal paths and the redirect stubs — it
+creates directories and files and deletes nothing — so a hand-written
+`steady-increment/index.html` or `steady-increment/vs-hevy/index.html` sits
+safely alongside the generated `steady-increment/privacy/index.html`. Do not
+extend `build.mjs` to generate them: it exists to strip maintainer notes out of
+legal markdown and asserts that none survived, which is a job marketing copy
+does not have.
+
+**Every claim on a marketing page has to match the app.** The numbers on the
+Steady Increment pages (exercise counts, import results, prices) are pinned in
+the app repo by `mobile/src/features/programs/__tests__/listing.test.ts` and
+`.../import/__tests__/tabularParity.test.ts`. If one changes there, change it
+here in the same session. `../exerciseapp/docs/launch/positioning.md` §10 is the
+rulebook for the copy itself — no superlatives without a mechanism, never lead
+with AI, never disparage a competitor by name.
 
 **Every document is namespaced under its app** — `lonexa.ai/micromajors/privacy/`,
 not `lonexa.ai/privacy/` — because Lonexa hosts more than one app and a

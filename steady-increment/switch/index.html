@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Switch from Alpha Progression, Strong or Hevy without losing your history</title>
+<meta name="description" content="Export from your current app, open the file in Steady Increment, and keep every set. What the importer does with your exercise names, your units and your warm-ups.">
+<link rel="canonical" href="https://lonexa.ai/steady-increment/switch/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Switch without losing your history">
+<meta property="og:description" content="Export, open, done. Here is exactly what happens to your data on the way in.">
+<meta property="og:url" content="https://lonexa.ai/steady-increment/switch/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<div class="shell">
+  <header class="masthead">
+    <a class="wordmark" href="/">Lonexa<span class="dot">.</span></a>
+    <nav>
+      <a href="/steady-increment/">Steady Increment</a>
+      <a href="/steady-increment/vs-alpha-progression/">vs Alpha Progression</a>
+      <a href="/steady-increment/vs-hevy/">vs Hevy</a>
+    </nav>
+  </header>
+</div>
+
+<div class="shell doc">
+  <div class="doc-inner">
+    <a class="backlink" href="/steady-increment/">&larr; Steady Increment</a>
+    <h1>Switch without losing your history</h1>
+    <p class="updated">Import behaviour verified against real exports, 8&nbsp;September&nbsp;2026.</p>
+
+    <p class="lede">
+      The reason people do not change training apps is not the price. It is the
+      years of logged sets. So: export from the app you are on, open the file
+      here, and keep every one of them.
+    </p>
+
+    <h2>Three steps</h2>
+    <ol>
+      <li><strong>Export from your current app.</strong> Alpha Progression, Strong and Hevy all export CSV; the option is in each app&rsquo;s own settings. (Hevy documents theirs in their <a href="https://help.hevyapp.com/hc/en-us/articles/35687878672663-Tutorial-Log-Previous-Workouts-and-Import-CSV">help centre</a>.)</li>
+      <li><strong>Open Steady Increment and go to Import.</strong> Pick the file.</li>
+      <li><strong>Answer any questions it asks</strong> &mdash; usually none, sometimes a handful. Then it is done.</li>
+    </ol>
+    <p>
+      You do not need an account and you do not need a connection. The import
+      runs on the phone.
+    </p>
+
+    <h2>What actually happens to your data</h2>
+    <p>These are measured against real exports of all three apps, not estimated:</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Export</th><th>Sets</th><th>Rows lost</th><th>Exercises matched without asking</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Alpha Progression, 16 months of training</td><td>2,846</td><td>none</td><td>87 of 87</td></tr>
+          <tr><td>Strong</td><td>1,903</td><td>none</td><td>19 of 22</td></tr>
+          <tr><td>Hevy</td><td>330</td><td>none</td><td>35 of 44</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1.5rem">
+      What it cannot match, it asks about once and then remembers. Strong&rsquo;s
+      three were &ldquo;Aerobics&rdquo;, &ldquo;Swimming&rdquo; and one press
+      variant &mdash; two of which are not lifting movements and are not in the
+      library on purpose. <strong>Nothing is silently dropped and nothing is
+      silently guessed.</strong>
+    </p>
+
+    <h2>Four details that decide whether an import is any good</h2>
+
+    <h3>Your machine history stays separate from your barbell history</h3>
+    <p>
+      Strong and Hevy both write the equipment inside the exercise name &mdash;
+      <code>Leg Press (Machine)</code>, <code>Snatch (Barbell)</code>,
+      <code>Bench Press (Smith Machine)</code>. This app stores the movement and
+      the equipment as separate fields, so it takes that apart and files each
+      set on the right row.
+    </p>
+    <p>
+      It only does that for words that are actually equipment. Hevy uses the
+      same position for things that are not &mdash;
+      <code>Butterfly (Pec Deck)</code>, <code>Lat Pulldown (V-grip)</code>,
+      <code>Chest Dip (Weighted)</code> &mdash; and those keep their names,
+      because stripping them would throw away the only word that identifies the
+      exercise.
+    </p>
+
+    <h3>Same name, different exercise, stays different</h3>
+    <p>
+      An Alpha Progression export uses &ldquo;Lateral Raises&rdquo; for three
+      separate exercises: machine, dumbbell and band. An importer that keys on
+      the name alone merges them, which puts 145&nbsp;lb machine sets and
+      20&nbsp;lb dumbbell sets on one strength curve and ruins both histories
+      invisibly. This one keys on name <em>and</em> equipment.
+    </p>
+
+    <h3>Kilograms stay kilograms</h3>
+    <p>
+      A metric export is converted rather than read as pounds. So are
+      kilometres. This sounds obvious and is exactly the kind of thing that goes
+      wrong quietly &mdash; a 2.2&times; error across an entire history looks
+      plausible on every individual screen.
+    </p>
+
+    <h3>Warm-ups do not become working sets</h3>
+    <p>
+      Where the export marks them, they are preserved as warm-ups. Where the
+      export does not distinguish them &mdash; Strong&rsquo;s does not &mdash;
+      they come in as logged sets, which is the honest outcome rather than a
+      guess. Worth knowing before you look at your first chart.
+    </p>
+
+    <h2>The Alpha Progression import checks its own work</h2>
+    <p>
+      Alpha Progression&rsquo;s displayed 10RM is raw Epley:
+      <code>weight &times; (1 + reps/30) &times; 0.75</code>. The export carries
+      those figures alongside the raw sets, so an imported set can be checked
+      against the number Alpha Progression itself reported. If a row were
+      mis-read, the arithmetic would disagree. The import verifies itself against
+      the app it came from &mdash; which is not something the other two formats
+      make possible, because they do not publish a derived number to check.
+    </p>
+
+    <h2>You can leave again</h2>
+    <p>
+      Export everything to CSV or JSON at any time, on any tier, free, forever
+      &mdash; and the CSV uses the same column names the importer reads, so it
+      round-trips. That is deliberate. An app that makes it hard to leave is
+      telling you something about how confident it is.
+    </p>
+
+    <h2>Re-importing is safe</h2>
+    <p>
+      Alpha Progression exports your whole history every time, so importing a
+      July file and then an August one would otherwise duplicate everything
+      before July. It does not: sessions are matched on the day and the workout
+      name, so an overlapping export adds only what is new.
+    </p>
+
+    <p style="margin-top:2.5rem">
+      <a class="cta" href="https://play.google.com/store/apps/details?id=ai.lonexa.steadyincrement">Steady Increment on Google Play &rarr;</a>
+      &nbsp;&middot;&nbsp;
+      <a href="/steady-increment/">What it is</a>
+    </p>
+  </div>
+</div>
+
+<div class="shell">
+  <footer>
+    <span>&copy; 2026 Lonexa LLC. Alpha Progression, Strong and Hevy are trademarks of their owners; this page is not affiliated with any of them.</span>
+    <span>
+      <a href="/steady-increment/privacy/">Privacy</a> &nbsp;&middot;&nbsp;
+      <a href="/steady-increment/terms/">Terms</a>
+    </span>
+  </footer>
+</div>
+
+</body>
+</html>
