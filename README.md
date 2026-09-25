@@ -72,12 +72,11 @@ cp ../MicroMajors/docs/legal/*.md content/micromajors/
 node build.mjs
 ```
 
-`build.mjs` strips HTML comments before rendering and then asserts that none
-survived. Every source document ends with a `MAINTAINER NOTE - not published`
-block, so this is not a theoretical concern — hand-converting these files would
-publish internal notes into page source. Those notes are where the unfinished
-business lives: what is described but not yet built, and which claim has to be
-re-checked before a store listing goes live.
+The source documents in the app repositories carry maintainer notes in HTML
+comments. This repository is public, so `build.mjs` strips those comments from
+the copies in `content/` as well as from the rendered pages, and then asserts
+that none survived. **Always run `node build.mjs` before committing** a newly
+copied document, so the notes stay in the app repository only.
 
 ## Previewing locally
 

@@ -9,7 +9,8 @@
  *
  * The source of truth for these documents is the app repository at
  * docs/legal/. Re-copy them into content/ and re-run `node build.mjs` when
- * they change.
+ * they change. The build also strips the notes out of the copies in content/,
+ * because this repository is public; commit only after running it.
  *
  *   node build.mjs
  */
@@ -154,9 +155,13 @@ function renderTable(appSlug, lines) {
   return `<div class="table-wrap"><table>\n<thead><tr>${th}</tr></thead>\n<tbody>\n${tr}\n</tbody>\n</table></div>`;
 }
 
+function stripComments(md) {
+  return md.replace(/<!--[\s\S]*?-->/g, '').replace(/\n{3,}/g, '\n\n').replace(/\s+$/, '\n');
+}
+
 function toHtml(md, appSlug) {
   // 1. Strip HTML comments. This is the whole reason the build exists.
-  const clean = md.replace(/<!--[\s\S]*?-->/g, '');
+  const clean = stripComments(md);
 
   const blocks = clean.split(/\n{2,}/);
   const out = [];
@@ -271,7 +276,22 @@ ${body}
 let failed = false;
 
 for (const page of PAGES) {
-  const md = readFileSync(new URL(page.md, import.meta.url), 'utf8');
+  const mdUrl = new URL(page.md, import.meta.url);
+  // Normalise line endings: a Windows checkout (core.autocrlf) hands us CRLF,
+  // and the block parser splits on blank lines written as \n\n.
+  let md = readFileSync(mdUrl, 'utf8').replace(/\r\n/g, '\n');
+
+  // 0. This repo is public, so the copies in content/ must not keep the
+  //    maintainer notes either — they stay in the app repo's docs/legal/.
+  //    Strip them from the copy in place; the rendered output is unchanged
+  //    because toHtml() drops comments anyway.
+  const source = stripComments(md);
+  if (source !== md) {
+    writeFileSync(mdUrl, source);
+    console.log(`stripped maintainer notes from ${page.md}`);
+    md = source;
+  }
+
   const { title, body } = toHtml(md, page.app.slug);
   const html = shell({ title, body, slug: page.slug, dir: page.dir, app: page.app });
   const out = `${page.dir}/index.html`;
