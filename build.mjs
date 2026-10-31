@@ -90,6 +90,12 @@ const APPS = [
     name: 'ThriftWorth',
     docs: ['privacy', 'terms'],
   },
+  {
+    // Local profile: no account and no server, so no /delete/.
+    slug: 'tubkeeper',
+    name: 'Tubkeeper',
+    docs: ['privacy', 'terms'],
+  },
 ];
 
 /** What each document is called, and where it comes from. */
