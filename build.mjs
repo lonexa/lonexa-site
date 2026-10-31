@@ -84,6 +84,12 @@ const APPS = [
     name: 'MicroMajors',
     docs: ['privacy', 'terms', 'delete'],
   },
+  {
+    // Local profile, like Booth Log: no account and no server, so no /delete/.
+    slug: 'donated',
+    name: 'Donated',
+    docs: ['privacy', 'terms'],
+  },
 ];
 
 /** What each document is called, and where it comes from. */
