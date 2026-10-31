@@ -1,15 +1,15 @@
-# Privacy Policy — Donated
+# Privacy Policy — ThriftWorth
 
-**Donated**
+**ThriftWorth**
 Last updated: 2026-10-31
 
-Donated is published by Lonexa LLC.
+ThriftWorth is published by Lonexa LLC.
 
 ## What we collect
 
 **None of your records.**
 
-Donated has no account and no sign-in. The charities, dates, items, values and
+ThriftWorth has no account and no sign-in. The charities, dates, items, values and
 photos you record are kept in a database and a folder on your phone. They are
 never sent to us or to anyone else. We cannot see them, we cannot recover them,
 and we hold no copy.

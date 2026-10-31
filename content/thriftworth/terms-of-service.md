@@ -1,15 +1,15 @@
-# Terms of Service — Donated
+# Terms of Service — ThriftWorth
 
-**Donated**
+**ThriftWorth**
 Last updated: 2026-10-31
 
 ## The agreement
 
-By using Donated, published by Lonexa LLC, you agree to these terms.
+By using ThriftWorth, published by Lonexa LLC, you agree to these terms.
 
 ## What this app is
 
-Donated is a record-keeping tool for noncash charitable gifts. **It is not tax,
+ThriftWorth is a record-keeping tool for noncash charitable gifts. **It is not tax,
 legal or accounting advice, and it is not tax software.**
 
 It adds up the values you record. Where it suggests a value, the figure comes

@@ -86,8 +86,8 @@ const APPS = [
   },
   {
     // Local profile, like Booth Log: no account and no server, so no /delete/.
-    slug: 'donated',
-    name: 'Donated',
+    slug: 'thriftworth',
+    name: 'ThriftWorth',
     docs: ['privacy', 'terms'],
   },
 ];
